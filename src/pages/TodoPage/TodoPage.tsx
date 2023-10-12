@@ -4,8 +4,8 @@ import Header from '../../components/Header/Header.tsx'
 import Todo from '../../components/Todo/Todo.tsx'
 import Todolist from '../../components/Todolist/Todolist.tsx'
 import TodoFormat from '../../components/TodoFormat.ts'
-import { isLoggedIn, logout } from '../../components/Auth.ts'
-import { retreiveTodos, updateTodos } from '../../components/Storage.ts'
+import { isLoggedIn, logout, createTodo, getTodos, filter } from '../../components/Api.ts'
+import { } from '../../components/Api.ts'
 
 const TodoPage: React.FC = () => {
     const [theme, setTheme] = useState<string>("light")
@@ -15,15 +15,13 @@ const TodoPage: React.FC = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const newTodos = retreiveTodos(username || "")
-        if (newTodos.length) {
-            setTodos(newTodos)
-        }
-    }, [])
+        getTodos(username || "")
+            .then((response: string) => {
+                console.log(filter(response))
+                setTodos(filter(response))
+            })
+    }, []);
 
-    useEffect(() => {
-        updateTodos(username || "", todos)
-    }, [todos])
 
     const LogOut = () => {
         logout(username || "")
@@ -33,9 +31,13 @@ const TodoPage: React.FC = () => {
     const handleAdd = (e: React.FormEvent) => {
         e.preventDefault()
         if (todo !== "") {
-            setTodos([...todos, { id: Math.random(), text: todo, completed: false }])
+            createTodo(todo)
+            getTodos(username || "")
+                .then((response: string) => {
+                    console.log(filter(response))
+                    setTodos(filter(response))
+                })
             setTodo("")
-            console.log(todos)
         }
     }
     return (

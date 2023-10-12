@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { login } from '../../components/Auth'
+import { login } from '../../components/Api'
 import styles from './Login.module.css'
 
 const Login: React.FC = () => {
@@ -9,11 +9,16 @@ const Login: React.FC = () => {
     const divRef = useRef<HTMLDivElement | null>(null)
     const navigate = useNavigate()
 
-    const handleSubmit = (e: React.FormEvent) => {
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         const username = usernameRef.current!.value
         const password = passwordRef.current!.value
-        if (login(username, password)) {
+
+        const response = await login(username, password)
+        if (response !== "Incorrect credentials") {
+            console.log(response)
             navigate(`/todo/${username}`)
         }
         else {

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import styles from './Signup.module.css'
-import { register } from '../../components/Auth'
+import { register } from '../../components/Api'
 
 const Signup: React.FC = () => {
 
@@ -10,7 +10,7 @@ const Signup: React.FC = () => {
     const divRef = useRef<HTMLDivElement | null>(null)
 
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         const username = usernameRef.current!.value
         const password = passwordRef.current!.value
@@ -22,9 +22,13 @@ const Signup: React.FC = () => {
             }
         }
         else {
-            const bool = register(username, password)
+            const bool = await register(username, password)
+            console.log(bool)
             if (bool) {
                 alert("Account created successfully")
+                if (divRef.current) {
+                    divRef.current.textContent = ""
+                }
             }
             else {
                 if (divRef.current) {

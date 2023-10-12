@@ -1,7 +1,7 @@
 interface TodoFormat {
     id: number;
     text: string;
-    completed: boolean;
+    completed: Boolean;
 }
 
 export default TodoFormat;

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TodoFormat from '../TodoFormat.ts'
+import { updateTodo, deleteTodo } from '../Api.ts'
+import './Todolist.css'
 interface Props {
   setTodos: React.Dispatch<React.SetStateAction<TodoFormat[]>>
   todos: TodoFormat[]
@@ -17,6 +19,7 @@ const Todolist: React.FC<Props> = ({ todos, setTodos }) => {
 
   const ToggleCompleted = (id: number): void => {
     const newTodos = [...todos]
+    updateTodo(id)
     const todo = newTodos.find(todo => todo.id === id)
     if (todo) {
       todo.completed = !todo.completed
@@ -26,6 +29,7 @@ const Todolist: React.FC<Props> = ({ todos, setTodos }) => {
   }
 
   const DeleteTodo = (id: number): void => {
+    deleteTodo(id)
     setTodos(todos.filter(todo => todo.id !== id))
     setTempTodos(todos)
   }

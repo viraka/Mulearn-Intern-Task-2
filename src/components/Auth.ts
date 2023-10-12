@@ -1,4 +1,4 @@
-import TodoFormat from "./TodoFormat";
+import TodoFormat from "./TodoFormat.ts";
 import { updateLocalStorage } from './Storage.ts'
 /*
 
