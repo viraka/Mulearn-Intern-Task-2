@@ -17,7 +17,6 @@ const TodoPage: React.FC = () => {
     useEffect(() => {
         getTodos(username || "")
             .then((response: string) => {
-                console.log(filter(response))
                 setTodos(filter(response))
             })
     }, []);
@@ -31,13 +30,13 @@ const TodoPage: React.FC = () => {
     const handleAdd = (e: React.FormEvent) => {
         e.preventDefault()
         if (todo !== "") {
-            createTodo(todo)
-            getTodos(username || "")
-                .then((response: string) => {
-                    console.log(filter(response))
-                    setTodos(filter(response))
-                })
-            setTodo("")
+            createTodo(todo).then(() => {
+                getTodos(username || "")
+                    .then((response: string) => {
+                        setTodos(filter(response))
+                    })
+                setTodo("")
+            })
         }
     }
     return (

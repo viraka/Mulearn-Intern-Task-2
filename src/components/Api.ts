@@ -131,7 +131,7 @@ const logout = (username: string): void => {
 }
 
 
-const createTodo = (title: string): void => {
+const createTodo = async (title: string): Promise<void> => {
     const accessToken = sessionStorage.getItem('accessToken');
 
     const form = new FormData()
@@ -164,6 +164,7 @@ const updateTodo = (id: number): void => {
 
 const deleteTodo = (id: number): void => {
     const accessToken = sessionStorage.getItem('accessToken');
+    // Try deleting the todo
     axios.delete(`${baseUrl}todo/${id}/`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`

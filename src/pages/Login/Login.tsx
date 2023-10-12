@@ -18,7 +18,6 @@ const Login: React.FC = () => {
 
         const response = await login(username, password)
         if (response !== "Incorrect credentials") {
-            console.log(response)
             navigate(`/todo/${username}`)
         }
         else {
