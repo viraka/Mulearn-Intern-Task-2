@@ -36,6 +36,11 @@ const Todolist: React.FC<Props> = ({ todos, setTodos }) => {
 
   const ClearCompleted = (): void => {
     setTodos(todos.filter(todo => !todo.completed))
+    todos.forEach(todo => {
+      if (todo.completed) {
+        deleteTodo(todo.id)
+      }
+    })
     setTempTodos(todos)
   }
 
