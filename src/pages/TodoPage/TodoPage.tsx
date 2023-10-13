@@ -34,6 +34,10 @@ const TodoPage: React.FC = () => {
                 getTodos(username || "")
                     .then((response: string) => {
                         setTodos(filter(response))
+                        getTodos(username || "")
+                            .then((response: string) => {
+                                setTodos(filter(response))
+                            })
                     })
                 setTodo("")
             })
